@@ -12,14 +12,14 @@ npm-debug.log
 yarn-error.log
 
 # IDEs and editors
-.vs/
-.idea/
+
 .project
 .classpath
 .c9/
 *.launch
 .settings/
 *.sublime-workspace
+.vs/
 
 # Visual Studio Code
 .vscode/*
