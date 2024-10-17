@@ -1,22 +1,28 @@
 version: 0.2
 
 phases:
-   install:
+  install:
     commands:
       - echo Installing nvm...
       - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
       - export NVM_DIR="$HOME/.nvm"
       - [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-      - echo Installing Node.js 18.4...
+      - [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+      - echo Installing Node.js...
       - nvm install 18.4.0
       - nvm use 18.4.0
-      - echo Installing dependencies...
+      - echo Installing Angular CLI...
+      - npm install -g @angular/cli
+      - echo Installing project dependencies...
       - npm install
-      
   build:
     commands:
       - echo Building the Angular project...
-      - npm run build 
+      - ng build --prod
+  post_build:
+    commands:
+      - echo Packaging the build artifacts...
+      - aws s3 sync dist/ s3://your-s3-bucket-name/ --delete
 
 artifacts:
   files:
@@ -27,8 +33,3 @@ artifacts:
 cache:
   paths:
     - node_modules/**/*
-
-environment:
-  computeType: BUILD_GENERAL1_SMALL
-  image: aws/codebuild/standard:5.0
-  type: LINUX_CONTAINER
