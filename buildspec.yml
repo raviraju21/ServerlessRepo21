@@ -9,8 +9,8 @@ phases:
       - '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"'
       - '[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"'
       - echo Installing Node.js...
-      - nvm install 18.4.0
-      - nvm use 18.4.0
+      - . "$NVM_DIR/nvm.sh" && nvm install 18.4.0
+      - . "$NVM_DIR/nvm.sh" && nvm use 18.4.0
       - echo Installing Angular CLI...
       - npm install -g @angular/cli
       - echo Installing project dependencies...
@@ -33,3 +33,8 @@ artifacts:
 cache:
   paths:
     - node_modules/**/*
+
+environment:
+  computeType: BUILD_GENERAL1_SMALL
+  image: aws/codebuild/standard:5.0
+  type: LINUX_CONTAINER
