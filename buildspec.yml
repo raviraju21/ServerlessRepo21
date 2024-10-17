@@ -2,11 +2,13 @@ version: 0.2
 
 phases:
   install:
-    runtime-versions:
-      nodejs: v18.13
     commands:
+      - echo Installing Node.js 18.4...
+      - curl -sL https://deb.nodesource.com/setup_18.x | bash -
+      - apt-get install -y nodejs
       - echo Installing dependencies...
       - npm install
+      
   build:
     commands:
       - echo Building the Angular project...
